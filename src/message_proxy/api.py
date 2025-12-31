@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Query, Request
 
+from message_proxy.config import settings
 from message_proxy.logging_config import get_logger
 from message_proxy.model import WechatBody
 from message_proxy.wechat import Wechat
@@ -27,6 +28,7 @@ async def health():
 @router.get("/wechat")
 async def wechat_send_message_get(
     message: str = Query(..., description="要发送的文本消息"),
+    token: str = Query(..., description="验证token"),
     wechat: Wechat = Depends(get_wechat),
 ):
     """发送文本消息到微信企业号
@@ -38,6 +40,8 @@ async def wechat_send_message_get(
     Returns:
         发送结果
     """
+    if token != settings.app_token:
+        return {"success": False, "message": "消息发送失败", "error": "Token不匹配"}
     try:
         response = await wechat.send_message_with_token(message)
         if response["errcode"] == 0:
@@ -50,7 +54,9 @@ async def wechat_send_message_get(
 
 @router.post("/wechat")
 async def wechat_send_message_post(
-    wechat_args: WechatBody, wechat: Wechat = Depends(get_wechat)
+    wechat_args: WechatBody,
+    wechat: Wechat = Depends(get_wechat),
+    token: str = Query(..., description="验证token"),
 ):
     """发送文本消息到微信企业号
 
@@ -60,6 +66,8 @@ async def wechat_send_message_post(
     Returns:
         发送结果
     """
+    if token != settings.app_token:
+        return {"success": False, "message": "消息发送失败", "error": "Token不匹配"}
     if wechat_args.message is None:
         return {"success": False, "message": "消息发送失败", "error": "message为空"}
     try:

@@ -17,6 +17,9 @@ env/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
 
 # Git
 .git/
@@ -30,6 +33,7 @@ tests/
 htmlcov/
 README.md
 LICENSE
+docs/
 
 # 日志
 .logs/
@@ -37,6 +41,7 @@ LICENSE
 
 # 依赖文件（pyproject.toml和uv.lock需要保留）
 *.txt
+requirements*.txt
 
 # 操作系统
 .DS_Store
@@ -46,6 +51,29 @@ Thumbs.db
 Dockerfile
 .dockerignore
 docker-compose.yml
+DOCKER_DEPLOY.md
 
 # Python版本文件
 .python-version
+
+# 环境变量文件
+.env
+.env.*
+!.env.example
+
+# 构建产物
+dist/
+build/
+*.egg-info/
+.eggs/
+*.egg
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# 其他
+*.md
+!pyproject.toml
+!uv.lock

@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     wechat_copid: str | None = None
     wechat_corpsecret: str | None = None
     wechat_agentid: str | None = None
-
+    app_token: str | None = None
     # 服务器配置
     host: str = "0.0.0.0"
     port: int = 8000
