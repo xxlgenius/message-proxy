@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     # backend_cors_origins: list[str] = ["http://localhost:3000"]
 
     # 日志配置
-    log_level: str = "DEBUG"
+    log_level: str = "INFO"
 
     # Docker 配置
     docker_mode: bool = False
