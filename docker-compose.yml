@@ -1,47 +1,16 @@
-version: '3.8'
-
 services:
   message-proxy:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    images: xxlgenius/message-proxy:1.0
     container_name: message-proxy
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "8600:8000"
     environment:
       # 微信企业配置（必填）
-      - WECHAT_COPID=${WECHAT_COPID:-}
-      - WECHAT_CORPSECRET=${WECHAT_CORPSECRET:-}
-      - WECHAT_AGENTID=${WECHAT_AGENTID:-}
+      - wechat_copid=ww5829cfd5388f15ea
+      - wechat_corpsecret=Q1UZcgGR2BIdu0UBZrj-90uaFItdsnoatPYtx4XCHZQ
+      - wechat_agentid=1000002
+      - app_token=PVveoC8sNjmXRF
 
-      # 服务器配置
-      - HOST=0.0.0.0
-      - PORT=8000
-
-      # 日志配置
-      - LOG_LEVEL=${LOG_LEVEL:-INFO}
-
-      # Docker模式
-      - DOCKER_MODE=true
-
-    # 可选：挂载配置文件（如果需要）
-    # volumes:
-    #   - ./logs:/app/logs
-
-    # 可选：网络配置
-    # networks:
-    #   - proxy-network
-
-    # 健康检查
-    healthcheck:
-      test: [ "CMD", "python", "-c", "import httpx; httpx.get('http://localhost:8000/docs', timeout=5)" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5s
-
-# 可选：网络配置
-# networks:
-#   proxy-network:
-#     driver: bridge
+    volumes:
+      - ./logs:/app/logs
